@@ -1,0 +1,104 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive, sans-serif;
+  background: #e6fff2;
+  min-height: 100vh;
+  overflow: hidden;
+}
+.page {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0; left: 0;
+  background: linear-gradient(180deg, #e6fff2 0%, #f6ffe6 100%);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.page.show {
+  display: flex;
+}
+.usagi-container {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+.usagi-drop {
+  position: absolute;
+  top: -80px;
+  width: 48px;
+  height: 48px;
+  opacity: 0.92;
+  transform: rotate(-18deg);
+  animation: usagi-fall-loop 1.8s cubic-bezier(0.6,0.2,0.4,1) forwards;
+}
+@keyframes usagi-fall-loop {
+  0% {
+    top: -80px;
+    opacity: 0.2;
+    transform: rotate(-18deg) scale(0.8);
+  }
+  80% {
+    opacity: 1;
+    transform: rotate(-8deg) scale(1.05);
+  }
+  100% {
+    top: var(--endY, 80vh);
+    opacity: 0.7;
+    transform: rotate(0deg) scale(1);
+  }
+}
+.start-btn, .blow-btn, .replay-btn {
+  display: block;
+  width: 220px;
+  max-width: 80vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 32vh;
+  padding: 18px 0;
+  font-size: 1.5rem;
+  background: #7be495;
+  color: #fff;
+  border: none;
+  border-radius: 32px;
+  box-shadow: 0 4px 16px #7be49555;
+  font-family: inherit;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 10;
+  text-align: center;
+}
+.start-btn:active, .blow-btn:active, .replay-btn:active {
+  background: #43c37b;
+  transform: scale(0.96);
+}
+#candle-video, #dark-video {
+  display: block;
+  margin: 0 auto;
+  max-width: 92vw;
+  max-height: 60vh;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #7be49555;
+  background: #f6ffe6;
+}
+#fireworks-canvas {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 让replay-btn在蜡烛页下方居中 */
+#page-candle .replay-btn {
+  margin-top: 16px;
+  margin-bottom: 0;
+  position: static;
+} 

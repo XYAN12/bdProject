@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生日快乐</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 首页 -->
+  <div id="page-home" class="page show">
+    <div class="usagi-container"></div>
+    <button class="start-btn">开始</button>
+  </div>
+  <!-- 蜡烛页 -->
+  <div id="page-candle" class="page">
+    <video id="candle-video" src="light-candle.mov" playsinline></video>
+    <button class="blow-btn">吹蜡烛</button>
+    <button class="replay-btn" style="display:none;">再点一遍</button>
+  </div>
+  <!-- 烟花页 -->
+  <div id="page-fireworks" class="page">
+    <video id="dark-video" src="dark.mov" playsinline></video>
+    <canvas id="fireworks-canvas"></canvas>
+  </div>
+  <audio id="usagi-audio" src="usagi.m4a" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html> 
