@@ -24,6 +24,13 @@
     <canvas id="fireworks-canvas"></canvas>
   </div>
   <audio id="usagi-audio" src="usagi.m4a" preload="auto"></audio>
+  <div id="sound-modal" style="position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.55);z-index:999;display:flex;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:32px 28px 24px 28px;border-radius:18px;box-shadow:0 8px 32px #0002;text-align:center;max-width:90vw;">
+      <div style="font-size:1.25rem;margin-bottom:18px;">是否允许网页播放声音？<br>（只能允许）</div>
+      <button id="allow-sound-btn" style="margin:0 18px 0 0;padding:10px 32px;font-size:1.1rem;border-radius:8px;border:none;background:#7be495;color:#fff;cursor:pointer;">允许</button>
+      <button id="mute-sound-btn" style="padding:10px 32px;font-size:1.1rem;border-radius:8px;border:none;background:#bbb;color:#fff;cursor:pointer;" disabled>静音</button>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html> 

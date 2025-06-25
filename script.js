@@ -9,10 +9,32 @@ const darkVideo = document.getElementById('dark-video');
 const fireworksCanvas = document.getElementById('fireworks-canvas');
 const replayBtn = document.querySelector('.replay-btn');
 const usagiAudio = document.getElementById('usagi-audio');
+const soundModal = document.getElementById('sound-modal');
+const allowSoundBtn = document.getElementById('allow-sound-btn');
+const muteSoundBtn = document.getElementById('mute-sound-btn');
+
+let darkBgTimeout = null;
+
+function setBodyBgToDark() {
+  document.body.style.background = '#000';
+  const fireworksPage = document.getElementById('page-fireworks');
+  if (fireworksPage) fireworksPage.style.background = '#000';
+}
+function restoreBodyBg() {
+  document.body.style.background = '';
+  const fireworksPage = document.getElementById('page-fireworks');
+  if (fireworksPage) fireworksPage.style.background = '';
+}
 
 function showPage(page) {
   [pageHome, pageCandle, pageFireworks].forEach(p => p.classList.remove('show'));
   page.classList.add('show');
+  // 页面切换时恢复背景色
+  restoreBodyBg();
+  if (darkBgTimeout) {
+    clearTimeout(darkBgTimeout);
+    darkBgTimeout = null;
+  }
 }
 
 // 首页usagi动画（循环不断掉落，落点分布更均匀）
@@ -84,6 +106,10 @@ blowBtn.onclick = () => {
     fireworksCanvas.height = window.innerHeight;
     const ctx = fireworksCanvas.getContext('2d');
     ctx && ctx.clearRect(0,0,fireworksCanvas.width,fireworksCanvas.height);
+    // 监听darkVideo播放进度
+    if (darkBgTimeout) clearTimeout(darkBgTimeout);
+    restoreBodyBg();
+    darkBgTimeout = setTimeout(setBodyBgToDark, 1500);
   });
 };
 
@@ -183,4 +209,46 @@ window.addEventListener('resize',()=>{
     fireworksCanvas.width = window.innerWidth;
     fireworksCanvas.height = window.innerHeight;
   }
-}); 
+});
+
+if (soundModal && allowSoundBtn) {
+  allowSoundBtn.onclick = () => {
+    soundModal.style.display = 'none';
+    usagiAudio.muted = false;
+  };
+}
+
+function createUsagiJumpAboveButton(btn) {
+  const rect = btn.getBoundingClientRect();
+  const img = document.createElement('img');
+  img.src = 'usagi-image.PNG';
+  img.style.position = 'fixed';
+  img.style.left = (rect.left + rect.width/2 - 24) + 'px';
+  img.style.top = (rect.top - 60) + 'px';
+  img.style.width = '48px';
+  img.style.height = '48px';
+  img.style.zIndex = 2000;
+  img.style.pointerEvents = 'none';
+  img.style.transition = 'transform 0.6s cubic-bezier(0.6, -0.3, 0.4, 1), opacity 0.3s 0.4s';
+  img.style.transform = 'translateY(0) scale(1)';
+  document.body.appendChild(img);
+  setTimeout(()=>{
+    img.style.transform = 'translateY(-60px) scale(1.15)';
+    img.style.opacity = '0';
+  }, 10);
+  setTimeout(()=>{
+    img.remove();
+  }, 700);
+}
+
+// 给所有button添加点击usagi跳跃特效
+function addUsagiJumpToAllButtons() {
+  document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      // 只在可用按钮上触发
+      if (!btn.disabled) createUsagiJumpAboveButton(btn);
+    });
+  });
+}
+// 页面加载完后执行
+window.addEventListener('DOMContentLoaded', addUsagiJumpToAllButtons); 
